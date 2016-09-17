@@ -1,3 +1,5 @@
+
+"use strict";
 var OnePushApp = OnePushApp || angular.module("OnePush", []);
 
 OnePushApp.controller("PushController", [ '$http', function($http) {
@@ -11,7 +13,7 @@ OnePushApp.controller("PushController", [ '$http', function($http) {
 
 		self.pushButtonDisabled = true;
 		console.debug("Pushing website");
-		$http.get(OnePushApp.API_URL, {
+		$http.post(OnePushApp.API_URL, {
 			params : {
 				'type' : 'json',
 				'query' : 'push',
