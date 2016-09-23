@@ -13,7 +13,10 @@ OnePushApp.controller("PushController", [ '$http', function($http) {
 
 		self.pushButtonDisabled = true;
 		console.debug("Pushing website");
-		$http.post(OnePushApp.API_URL, {
+
+		var pushRequest  = {
+			url: OnePushApp.API_URL,
+			method: 'GET',
 			params : {
 				'type' : 'json',
 				'query' : 'push',
@@ -21,11 +24,12 @@ OnePushApp.controller("PushController", [ '$http', function($http) {
 				'url' : self.url,
 				'tag' : self.tag
 			}
-		}).success(function(data) {
+		};
+		$http(pushRequest).then(function(data) {
 			console.debug("Website" + self.url + "pushed successfully");
-			self.processPushResponse(data);
+			self.processPushResponse(data.data);
 			self.pushButtonDisabled = false;
-		}).error(function(a, b, c) {
+		}, function(a, b, c) { 
 			console.error("Error occured when pushing website list", a, b, c);
 			self.pushButtonDisabled = false;
 		});
